@@ -1,7 +1,7 @@
 import plotly.express as px
-import DataFormater
+import FormatData
 
-formatedData = DataFormater.FormatData()
+formatedData = FormatData.FormatData()
 for item in formatedData.items():
     print(item)
 
