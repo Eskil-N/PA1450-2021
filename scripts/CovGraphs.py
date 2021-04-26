@@ -2,7 +2,7 @@ import plotly.express as px
 import math
 #import DataFormater
 
-def CR_DataPrepper(formatedData, searchedCategory):
+def CR_DataPrepper(formatedData, searchedCategory): # General Country_Region Dapa prepper. Takes in whole dataset and returns a dict that can be used with plotly.
     sortedDict = {'Country_Region': [], 'Data' : []}
     tempDict = {}
     for x in formatedData['Country_Region'].items():
@@ -19,7 +19,7 @@ def CR_DataPrepper(formatedData, searchedCategory):
 
     return sortedDict #Dict is structures like others produced from Dataformater with one category for province/state and another for the data but sorted.
 
-def PS_DataPrepper(formatedData, searchedCategory, searchedCountry): #Function returns a dict containing all province/states and its selected category data from selected country.
+def PS_DataPrepper(formatedData, searchedCategory, searchedCountry): # General Province_State Data prepper. Takes in whole dataset, specified category, can country.
     sortedDict = {'Province_State' : [], 'Data' : []}
     tempDict = {}
     for x, y in zip(formatedData['Country_Region'].items(), formatedData['Province_State'].items()):
@@ -37,7 +37,7 @@ def PS_DataPrepper(formatedData, searchedCategory, searchedCountry): #Function r
 
     return sortedDict #Dict is structures like others produced from Dataformater with one category for province/state and another for the data but sorted.
 
-def IR_PS_DataPrepper(formatedData, searchedCountry):
+def IR_PS_DataPrepper(formatedData, searchedCountry): #Data prepper for Province_State with regards to Incident_Rate. Calculates average IR for State_Province in specified country and returns it as a sorted dict.
     sortedDict = {'Province_State' : [], 'Infection Rate per 100k Population' : []}
     tempDict = {}
     tempIndexDict = {}
@@ -63,7 +63,7 @@ def IR_PS_DataPrepper(formatedData, searchedCountry):
     
     return sortedDict
 
-def IR_C_DataPrepper(formatedData):
+def IR_C_DataPrepper(formatedData): #Incident_Rate Data prepper for Country_Region. Returns a sorted Dict with a countries average IR that can be used with plotly.
     sortedDict = {'Country_Region' : [], 'Infection Rate per 100k Population' : []}
     tempDict = {}
     tempIndexDict = {}
@@ -89,13 +89,13 @@ def IR_C_DataPrepper(formatedData):
 
     return sortedDict #Dict is structures like others produced from Dataformater with one category for province/state and another for the data but sorted.
 
-def CreateCountryBar(formatedData, searchedCategory):
+def CreateCountryBar(formatedData, searchedCategory):# Creates and dissplays a bar chart with countries and specified categorys, will only work with cumulative data like deaths, confirmed
     myDict = CR_DataPrepper(formatedData, searchedCategory)
     #print(myDict)
     fig = px.bar(myDict, x='Country_Region', y='Data')
     fig.show()
 
-def CreateRegionBar(formatedData, searchedCategory, searchedCountry): #function creates a sorted bar chart from provided Dict.
+def CreateRegionBar(formatedData, searchedCategory, searchedCountry): #function creates a sorted bar chart of regions of a country, and specified data category.
     myDict = PS_DataPrepper(formatedData, searchedCategory, searchedCountry)
     #print(myDict)
     fig = px.bar(myDict, x='Province_State', y='Data')
