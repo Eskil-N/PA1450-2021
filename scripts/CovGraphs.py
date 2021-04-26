@@ -2,7 +2,7 @@ import plotly.express as px
 import math
 #import DataFormater
 
-def CRDataPrepper(formatedData, searchedCategory):
+def CR_DataPrepper(formatedData, searchedCategory):
     sortedDict = {'Country_Region': [], 'Data' : []}
     tempDict = {}
     for x in formatedData['Country_Region'].items():
@@ -19,7 +19,7 @@ def CRDataPrepper(formatedData, searchedCategory):
 
     return sortedDict #Dict is structures like others produced from Dataformater with one category for province/state and another for the data but sorted.
 
-def PSDataPrepper(formatedData, searchedCategory, searchedCountry): #Function returns a dict containing all province/states and its selected category data from selected country.
+def PS_DataPrepper(formatedData, searchedCategory, searchedCountry): #Function returns a dict containing all province/states and its selected category data from selected country.
     sortedDict = {'Province_State' : [], 'Data' : []}
     tempDict = {}
     for x, y in zip(formatedData['Country_Region'].items(), formatedData['Province_State'].items()):
@@ -37,7 +37,33 @@ def PSDataPrepper(formatedData, searchedCategory, searchedCountry): #Function re
 
     return sortedDict #Dict is structures like others produced from Dataformater with one category for province/state and another for the data but sorted.
 
-def IRCDataPrepper(formatedData):
+def IR_PS_DataPrepper(formatedData, searchedCountry):
+    sortedDict = {'Province_State' : [], 'Infection Rate per 100k Population' : []}
+    tempDict = {}
+    tempIndexDict = {}
+    for x,y in zip(formatedData['Country_Region'].items(), formatedData['Province_State'].items()):
+        if (x[1] == searchedCountry):
+            if formatedData['Province_State'][x[0]] in tempDict:
+                if not math.isnan(formatedData['Incident_Rate'][x[0]]):
+                    tempDict[y[1]] += formatedData['Incident_Rate'][x[0]]
+                    tempIndexDict[y[1]] += 1
+            else:
+                if not math.isnan(formatedData['Incident_Rate'][x[0]]):
+                    tempDict[y[1]] = formatedData['Incident_Rate'][x[0]]
+                    tempIndexDict[y[1]] = 1
+    
+    for x in tempDict.items():
+        tempDict[x[0]] = round((tempDict[x[0]])/(tempIndexDict[x[0]]), 2)
+    
+    tempDict = dict(sorted(tempDict.items(), key=lambda item: item[1]))
+
+    for key, val in tempDict.items():
+        sortedDict['Province_State'].append(key)
+        sortedDict['Infection Rate per 100k Population'].append(val)
+    
+    return sortedDict
+
+def IR_C_DataPrepper(formatedData):
     sortedDict = {'Country_Region' : [], 'Infection Rate per 100k Population' : []}
     tempDict = {}
     tempIndexDict = {}
@@ -64,22 +90,27 @@ def IRCDataPrepper(formatedData):
     return sortedDict #Dict is structures like others produced from Dataformater with one category for province/state and another for the data but sorted.
 
 def CreateCountryBar(formatedData, searchedCategory):
-    myDict = CRDataPrepper(formatedData, searchedCategory)
-    print(myDict)
+    myDict = CR_DataPrepper(formatedData, searchedCategory)
+    #print(myDict)
     fig = px.bar(myDict, x='Country_Region', y='Data')
     fig.show()
 
 def CreateRegionBar(formatedData, searchedCategory, searchedCountry): #function creates a sorted bar chart from provided Dict.
-    myDict = PSDataPrepper(formatedData, searchedCategory, searchedCountry)
+    myDict = PS_DataPrepper(formatedData, searchedCategory, searchedCountry)
     #print(myDict)
     fig = px.bar(myDict, x='Province_State', y='Data')
     fig.show()
 
-def CreateIRCountryBar(formatedData):
-    myDict = IRCDataPrepper(formatedData)
-    print(myDict)
+def CreateIRCountryBar(formatedData): #function creates a sorted bar chart with countries and thier respective infection rate per 100k people.
+    myDict = IR_C_DataPrepper(formatedData)
+    #print(myDict)
     fig = px.bar(myDict, x='Country_Region', y='Infection Rate per 100k Population')
     fig.show()
 
-#def CreateIRRegionBar(formatedData, searchedCountry):
+def CreateIRRegionBar(formatedData, searchedCountry): #function creates a sorted bar chart with Regions of selected country and thier respective infection rates per 100k people.
+    myDict = IR_PS_DataPrepper(formatedData,searchedCountry)
+    #print(myDict)
+    fig = px.bar(myDict, x='Province_State', y='Infection Rate per 100k Population')
+    fig.show()
+    
 
