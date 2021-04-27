@@ -1,6 +1,8 @@
 """Module for serving an API."""
 
 from flask import Flask, send_file
+# from FormatData import FormatData
+# from CovGraphs import CreateCountryBar, CreateRegionBar, CreateIRCountryBar, CreateIRRegionBar
 
 def serve(options):
     """Serve an API."""
@@ -17,6 +19,11 @@ def serve(options):
     def greeting(name):
         """Return a greeting for the user."""
         return "Hello, {}!".format(name)
+
+    # @app.route("/1")
+    # def graph():
+    #     """Shows a graph"""
+    #     return CreateIRCountryBar(FormatData())
 
     app.run(host=options.address, port=options.port, debug=True)
 
