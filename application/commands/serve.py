@@ -1,8 +1,8 @@
 """Module for serving an API."""
 
 from flask import Flask, send_file
-# from FormatData import FormatData
-# from CovGraphs import CreateCountryBar, CreateRegionBar, CreateIRCountryBar, CreateIRRegionBar
+from application.scripts.FormatData import FormatData
+from application.scripts.CovGraphs import CreateCountryBar, CreateRegionBar, CreateIRCountryBar, CreateIRRegionBar
 
 def serve(options):
     """Serve an API."""
@@ -11,19 +11,29 @@ def serve(options):
     app = Flask(__name__)
 
     @app.route("/")
+
     def index():
+        
         """Return the index page of the website."""
+
         return send_file("../www/index.html")
 
     @app.route("/greeting/<name>")
+
     def greeting(name):
+
         """Return a greeting for the user."""
+
         return "Hello, {}!".format(name)
 
-    # @app.route("/1")
-    # def graph():
-    #     """Shows a graph"""
-    #     return CreateIRCountryBar(FormatData())
+    @app.route("/countries")
+
+    def graph():
+
+        """Shows graph of countries"""
+
+        CreateIRCountryBar(FormatData()) # Opens Graph in new window
+        return send_file("../www/index.html") # Returns current window to main menu
 
     app.run(host=options.address, port=options.port, debug=True)
 
