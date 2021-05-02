@@ -20,9 +20,15 @@ def serve(options):
         """Return a greeting for the user."""
         return "Hello, {}!".format(name)
 
-    @app.route("/countries")
-    def graph():
-        """Shows graph of countries"""
+    @app.route("/country/<category>")
+    def graphCountry(category):
+        """Shows graph of 'category' by country"""
+        CreateCountryBar(FormatData(), category)
+        return send_file("../www/index.html")
+
+    @app.route("/infection")
+    def graphInfection():
+        """Shows graph of Infection rate per capita for each country"""
         CreateIRCountryBar(FormatData()) # Opens Graph in new window
         return send_file("../www/index.html") # Returns current window to main menu
 
