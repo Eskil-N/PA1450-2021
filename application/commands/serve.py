@@ -11,27 +11,18 @@ def serve(options):
     app = Flask(__name__)
 
     @app.route("/")
-
     def index():
-        
         """Return the index page of the website."""
-
         return send_file("../www/index.html")
 
     @app.route("/greeting/<name>")
-
     def greeting(name):
-
         """Return a greeting for the user."""
-
         return "Hello, {}!".format(name)
 
     @app.route("/countries")
-
     def graph():
-
         """Shows graph of countries"""
-
         CreateIRCountryBar(FormatData()) # Opens Graph in new window
         return send_file("../www/index.html") # Returns current window to main menu
 
