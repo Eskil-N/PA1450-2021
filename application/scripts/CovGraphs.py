@@ -90,28 +90,28 @@ def IR_C_DataPrepper(formatedData): #Incident_Rate Data prepper for Country_Regi
     return sortedDict #Dict is structures like others produced from Dataformater with one category for province/state and another for the data but sorted.
 
 def CreateCountryBar(formatedData, searchedCategory):# Creates and dissplays a bar chart with countries and specified categorys, will only work with cumulative data like deaths, confirmed
-    """Excellent"""
+    """Creates bargraph from all country by specific categories, such as Confirmed and Death"""
     myDict = CR_DataPrepper(formatedData, searchedCategory)
     #print(myDict)
     fig = px.bar(myDict, x='Country_Region', y='Data')
     fig.show()
 
 def CreateRegionBar(formatedData, searchedCategory, searchedCountry): #function creates a sorted bar chart of regions of a country, and specified data category.
-    """Cool"""
+    """Creates a graph of all regions of specified country, by specified category"""
     myDict = PS_DataPrepper(formatedData, searchedCategory, searchedCountry)
     #print(myDict)
     fig = px.bar(myDict, x='Province_State', y='Data')
     fig.show()
 
 def CreateIRCountryBar(formatedData): #function creates a sorted bar chart with countries and thier respective infection rate per 100k people.
-    """Hello"""
+    """Creates graph of all countries by infection rate per capita"""
     myDict = IR_C_DataPrepper(formatedData)
     #print(myDict)
     fig = px.bar(myDict, x='Country_Region', y='Infection Rate per 100k Population')
     fig.show()
 
 def CreateIRRegionBar(formatedData, searchedCountry): #function creates a sorted bar chart with Regions of selected country and thier respective infection rates per 100k people.
-    """Wow"""
+    """Creates graph of specified country by infection rate per capita"""
     myDict = IR_PS_DataPrepper(formatedData,searchedCountry)
     #print(myDict)
     fig = px.bar(myDict, x='Province_State', y='Infection Rate per 100k Population')

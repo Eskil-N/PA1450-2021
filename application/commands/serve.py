@@ -15,15 +15,16 @@ def serve(options):
         """Return the index page of the website."""
         return send_file("../www/index.html")
 
-    @app.route("/greeting/<name>")
-    def greeting(name):
-        """Return a greeting for the user."""
-        return "Hello, {}!".format(name)
-
     @app.route("/country/<category>")
     def graphCountry(category):
         """Shows graph of 'category' by country"""
         CreateCountryBar(FormatData(), category)
+        return send_file("../www/index.html")
+
+    @app.route("/?country=<country>")
+    def graphSearch(country):
+        """Shows graph of confirmed cases of searched country"""
+        CreateRegionBar(FormatData(), "Confirmed", country)
         return send_file("../www/index.html")
 
     @app.route("/infection")
