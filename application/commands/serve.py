@@ -21,8 +21,8 @@ def serve(options):
         CreateCountryBar(FormatData(), category)
         return send_file("../www/index.html")
 
-    @app.route("/?country=<country>")
-    def graphSearch(country):
+    @app.route("/search/<search>")
+    def graphSearch(search):
         """Shows graph of confirmed cases of searched country"""
         CreateRegionBar(FormatData(), "Confirmed", country)
         return send_file("../www/index.html")
