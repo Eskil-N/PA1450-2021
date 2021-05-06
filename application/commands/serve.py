@@ -1,6 +1,6 @@
 """Module for serving an API."""
 
-from flask import Flask, send_file
+from flask import Flask, send_file, redirect, url_for
 from application.scripts.FormatData import FormatData
 from application.scripts.CovGraphs import CreateCountryBar, CreateRegionBar, CreateIRCountryBar, CreateIRRegionBar
 
@@ -19,19 +19,19 @@ def serve(options):
     def graphCountry(category):
         """Shows graph of 'category' by country"""
         CreateCountryBar(FormatData(), category)
-        return send_file("../www/index.html")
+        return redirect("http://0.0.0.0:8080/")
 
     @app.route("/search/<search>")
     def graphSearch(search):
         """Shows graph of confirmed cases of searched country"""
         CreateRegionBar(FormatData(), "Confirmed", country)
-        return send_file("../www/index.html")
+        return redirect("http://0.0.0.0:8080/")
 
     @app.route("/infection")
     def graphInfection():
         """Shows graph of Infection rate per capita for each country"""
         CreateIRCountryBar(FormatData()) # Opens Graph in new window
-        return send_file("../www/index.html") # Returns current window to main menu
+        return redirect("http://0.0.0.0:8080/") # Returns current window to main menu
 
     app.run(host=options.address, port=options.port, debug=True)
 
