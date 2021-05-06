@@ -1,7 +1,6 @@
 def isCountry(dataSet, searchTerm):
-    for item in dataSet['Country_Region'].items():
-        if (item[1] == searchTerm):
-            return True
+    if (searchTerm in dataSet['Country_Region']):
+        return True
     return False
 
 def Search(dataSet, searchTerm):
