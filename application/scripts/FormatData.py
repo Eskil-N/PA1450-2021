@@ -10,4 +10,4 @@ def FormatData():
         
     data = pd.read_csv(url, sep=",", header=[0]) # Gets all information from selected url
 
-    return data.to_dict() # Converts Dataframe into Dictionary
+    return data # Return Dataframe
