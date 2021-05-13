@@ -24,7 +24,7 @@ def serve(options):
     @app.route("/search/<search>")
     def graphSearch(search):
         """Shows graph of confirmed cases of searched country"""
-        CreateRegionBar(FormatData(), "Confirmed", country)
+        CreateRegionBar(FormatData(), "Confirmed", search)
         return redirect("http://0.0.0.0:8080/")
 
     @app.route("/infection")
