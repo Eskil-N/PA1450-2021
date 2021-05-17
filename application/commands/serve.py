@@ -38,6 +38,13 @@ def serve(options):
         """Reroutes to correct directory"""
         return send_file("../www/compare.html")
 
+    @app.route("/compare/<country1>")
+    def compare1(country1):
+        """Adds selected country to ... but does not redirect"""
+        # directory = "../www/compare/" + country1
+        # return send_file(directory)
+        return send_file("../www/compare.html")
+
     app.run(host=options.address, port=options.port, debug=True)
 
 def create_parser(subparsers):
