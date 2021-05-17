@@ -1,6 +1,6 @@
 """Module for serving an API."""
 
-from flask import Flask, send_file, redirect, url_for
+from flask import Flask, send_file, redirect, render_template
 from application.scripts.FormatData import FormatData
 from application.scripts.CovGraphs import CreateCountryBar, CreateRegionBar, CreateIRCountryBar, CreateIRRegionBar
 
@@ -32,6 +32,11 @@ def serve(options):
         """Shows graph of Infection rate per capita for each country"""
         CreateIRCountryBar(FormatData()) # Opens Graph in new window
         return redirect("http://0.0.0.0:8080/") # Returns current window to main menu
+
+    @app.route("/compare")
+    def reroute():
+        """Reroutes to correct directory"""
+        return send_file("../www/compare.html")
 
     app.run(host=options.address, port=options.port, debug=True)
 
