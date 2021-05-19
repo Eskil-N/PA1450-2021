@@ -1,6 +1,35 @@
 import plotly.express as px
+import plotly.graph_objects as go
+import pandas as pd
 import math
 
+def Comp_DataPrepper(formatedData, country1, country2, searchedCategory):
+    CombinedFrame = pd.DataFrame()
+    for index, row in formatedData.iterrows():
+        if (row['Country_Region'] == country1):
+            if (CombinedFrame.empty):
+                row['Color'] = 'crimson'
+                CombinedFrame = CombinedFrame.append(row)
+            else:
+                if (row['Province_State'] in CombinedFrame['Province_State']):
+                    CombinedFrame['Province_state'][searchedCategory] += row[searchedCategory]
+                else:
+                    row['Color'] = 'crimson'
+                    CombinedFrame = CombinedFrame.append(row)
+        if (row['Country_Region'] == country2):
+            if (CombinedFrame.empty):
+                row['Color'] = 'cyan'
+                CombinedFrame = CombinedFrame.append(row)
+            else:
+                if (row['Province_State'] in CombinedFrame['Province_State']):
+                    CombinedFrame['Province_state'][searchedCategory] += row[searchedCategory]
+                else:
+                    row['Color'] = 'cyan'
+                    CombinedFrame = CombinedFrame.append(row)
+
+    SortedFrame = CombinedFrame.sort_values([searchedCategory], ascending=True)
+    
+    return SortedFrame 
 
 def Comp_IR_DataPrepper(formatedData, country1, country2):
     CombinedDict = IR_PS_DataPrepper(formatedData,country1)
@@ -142,7 +171,7 @@ def CreateIRRegionBar(formatedData, searchedCountry): #function creates a sorted
     myDict = IR_PS_DataPrepper(formatedData,searchedCountry)
     #print(myDict)
     fig = px.bar(myDict, x='Province_State', y='Infection Rate per 100k Population')
-    fig.update_layout(title_text='Graph of Infections per Capita in' + searchedCategory)
+    fig.update_layout(title_text='Graph of Infections per Capita in' + searchedCountry)
     fig.show()
 
 def CompareIRCountryBar(formatedData, country1, country2):
@@ -150,3 +179,9 @@ def CompareIRCountryBar(formatedData, country1, country2):
     fig = px.bar(Combined, x='Province_State', y='Infection Rate per 100k Population')
     fig.show()
 
+def CompareCountryBar(formatedData, country1, country2, searchedCategory): #Exempel p[ hur man callar funktionen: CompareCountryBar(data,'Germany','Sweden','Confirmed')]
+    Combined = Comp_DataPrepper(formatedData,country1,country2,searchedCategory)
+    fig = go.Figure(data=[go.Bar( x=Combined['Province_State'], y=Combined[searchedCategory], marker_color=Combined['Color'])])
+    fig.update_layout(title_text='Graph of ' + searchedCategory + ' in ' + country1 + ' and '+ country2)
+    fig.show()
+    
