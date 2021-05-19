@@ -15,7 +15,18 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
-  <script type="text/javascript" src="../www/main.js"></script>
+
+  <script type="text/javascript">
+
+    function linkAppend(country) // Adds onto current link
+    {
+      let link = document.getElementById(country);
+      newCountry = country
+
+      link.href = link.href + "/" + newCountry;
+    }
+
+  </script>
 
 </head>
 <body>
@@ -49,7 +60,7 @@
             </ul>
           </li>
           <li class="nav item">
-            <a class="nav-link" href="compare">
+            <a class="nav-link" href="http://0.0.0.0:8080/compare">
               Compare
             </a>
           </li>
@@ -74,30 +85,29 @@
           Country 1
         </a>
         <ul class="dropdown-menu">
-          <!--<li class="compare-link"><input type="button" onclick="linkAppend(Australia)" value="Australia"></li>-->
-          <li><a href="/compare/Australia">Australia</a></li>
-          <li><a href="/compare/Belgium">Belgium</a></li>
-          <li><a href="/compare/Brazil">Brazil</a></li>
-          <li><a href="/compare/Canada">Canada</a></li>
-          <li><a href="/compare/Chile">Chile</a></li>
-          <li><a href="/compare/China">China</a></li>
-          <li><a href="/compare/Colombia">Colombia</a></li>
-          <li><a href="/compare/Denmark">Denmark</a></li>
-          <li><a href="/compare/France">France</a></li>
-          <li><a href="/compare/Germany">Germany</a></li>
-          <li><a href="/compare/India">India</a></li>
-          <li><a href="/compare/Italy">Italy</a></li>
-          <li><a href="/compare/Japan">Japan</a></li>
-          <li><a href="/compare/Mexico">Mexico</a></li>
-          <li><a href="/compare/Netherlands">Netherlands</a></li>
-          <li><a href="/compare/Pakistan">Pakistan</a></li>
-          <li><a href="/compare/Peru">Peru</a></li>
-          <li><a href="/compare/Russia">Russia</a></li>
-          <li><a href="/compare/Spain">Spain</a></li>
-          <li><a href="/compare/Sweden">Sweden</a></li>
-          <li><a href="/compare/US">United States of America</a></li>
-          <li><a href="/compare/Ukraine">Ukraine</a></li>
-          <li><a href="/compare/United Kingdom">United Kingdom</a></li>
+          <li><a href="" onclick="linkAppend('Australia1')" id="Australia1">Australia</a></li>
+          <li><a href="" onclick="linkAppend('Belgium1')" id="Belgium1">Belgium</a></li>
+          <li><a href="" onclick="linkAppend('Brazil1')" id="Brazil1">Brazil</a></li>
+          <li><a href="" onclick="linkAppend('Canada1')" id="Canada1">Canada</a></li>
+          <li><a href="" onclick="linkAppend('Chile1')" id="Chile1">Chile</a></li>
+          <li><a href="" onclick="linkAppend('China1')" id="China1">China</a></li>
+          <li><a href="" onclick="linkAppend('Colombia1')" id="Colombia1">Colombia</a></li>
+          <li><a href="" onclick="linkAppend('Denmark1')" id="Denmark1">Denmark</a></li>
+          <li><a href="" onclick="linkAppend('France1')" id="France1">France</a></li>
+          <li><a href="" onclick="linkAppend('Germany1')" id="Germany1">Germany</a></li>
+          <li><a href="" onclick="linkAppend('India1')" id="India1">India</a></li>
+          <li><a href="" onclick="linkAppend('Italy1')" id="Italy1">Italy</a></li>
+          <li><a href="" onclick="linkAppend('Japan1')" id="Japan1">Japan</a></li>
+          <li><a href="" onclick="linkAppend('Mexico1')" id="Mexico1">Mexico</a></li>
+          <li><a href="" onclick="linkAppend('Netherlands1')" id="Netherlands1">The Netherlands</a></li>
+          <li><a href="" onclick="linkAppend('Pakistan1')" id="Pakistan1">Pakistan</a></li>
+          <li><a href="" onclick="linkAppend('Peru1')" id="Peru1">Peru</a></li>
+          <li><a href="" onclick="linkAppend('Russia1')" id="Russia1">Russia</a></li>
+          <li><a href="" onclick="linkAppend('Spain1')" id="Spain1">Spain</a></li>
+          <li><a href="" onclick="linkAppend('Sweden1')" id="Sweden1">Sweden</a></li>
+          <li><a href="" onclick="linkAppend('US1')" id="US1">United States of America</a></li>
+          <li><a href="" onclick="linkAppend('Ukraine1')" id="Ukraine1">Ukraine</a></li>
+          <li><a href="" onclick="linkAppend('United_Kingdom1')" id="United_Kingdom1">United Kingdom</a></li>
         </ul>
       </div>
 
@@ -106,29 +116,29 @@
           Country 2
         </a>
         <ul class="dropdown-menu">
-          <li><a href="/compare/Australia">Australia</a></li>
-          <li><a href="/compare/Belgium">Belgium</a></li>
-          <li><a href="/compare/Brazil">Brazil</a></li>
-          <li><a href="/compare/Canada">Canada</a></li>
-          <li><a href="/compare/Chile">Chile</a></li>
-          <li><a href="/compare/China">China</a></li>
-          <li><a href="/compare/Colombia">Colombia</a></li>
-          <li><a href="/compare/Denmark">Denmark</a></li>
-          <li><a href="/compare/France">France</a></li>
-          <li><a href="/compare/Germany">Germany</a></li>
-          <li><a href="/compare/India">India</a></li>
-          <li><a href="/compare/Italy">Italy</a></li>
-          <li><a href="/compare/Japan">Japan</a></li>
-          <li><a href="/compare/Mexico">Mexico</a></li>
-          <li><a href="/compare/Netherlands">Netherlands</a></li>
-          <li><a href="/compare/Pakistan">Pakistan</a></li>
-          <li><a href="/compare/Peru">Peru</a></li>
-          <li><a href="/compare/Russia">Russia</a></li>
-          <li><a href="/compare/Spain">Spain</a></li>
-          <li><a href="/compare/Sweden">Sweden</a></li>
-          <li><a href="/compare/US">United States of America</a></li>
-          <li><a href="/compare/Ukraine">Ukraine</a></li>
-          <li><a href="/compare/United Kingdom">United Kingdom</a></li>
+          <li><a href="" onclick="linkAppend('Australia2')" id="Australia2">Australia</a></li>
+          <li><a href="" onclick="linkAppend('Belgium2')" id="Belgium2">Belgium</a></li>
+          <li><a href="" onclick="linkAppend('Brazil2')" id="Brazil2">Brazil</a></li>
+          <li><a href="" onclick="linkAppend('Canada2')" id="Canada2">Canada</a></li>
+          <li><a href="" onclick="linkAppend('Chile2')" id="Chile2">Chile</a></li>
+          <li><a href="" onclick="linkAppend('China2')" id="China2">China</a></li>
+          <li><a href="" onclick="linkAppend('Colombia2')" id="Colombia2">Colombia</a></li>
+          <li><a href="" onclick="linkAppend('Denmark2')" id="Denmark2">Denmark</a></li>
+          <li><a href="" onclick="linkAppend('France2')" id="France2">France</a></li>
+          <li><a href="" onclick="linkAppend('Germany2')" id="Germany2">Germany</a></li>
+          <li><a href="" onclick="linkAppend('India2')" id="India2">India</a></li>
+          <li><a href="" onclick="linkAppend('Italy2')" id="Italy2">Italy</a></li>
+          <li><a href="" onclick="linkAppend('Japan2')" id="Japan2">Japan</a></li>
+          <li><a href="" onclick="linkAppend('Mexico2')" id="Mexico2">Mexico</a></li>
+          <li><a href="" onclick="linkAppend('Netherlands2')" id="Netherlands2">The Netherlands</a></li>
+          <li><a href="" onclick="linkAppend('Pakistan2')" id="Pakistan2">Pakistan</a></li>
+          <li><a href="" onclick="linkAppend('Peru2')" id="Peru2">Peru</a></li>
+          <li><a href="" onclick="linkAppend('Russia2')" id="Russia2">Russia</a></li>
+          <li><a href="" onclick="linkAppend('Spain2')" id="Spain2">Spain</a></li>
+          <li><a href="" onclick="linkAppend('Sweden2')" id="Sweden2">Sweden</a></li>
+          <li><a href="" onclick="linkAppend('US2')" id="US2">United States of America</a></li>
+          <li><a href="" onclick="linkAppend('Ukraine2')" id="Ukraine2">Ukraine</a></li>
+          <li><a href="" onclick="linkAppend('United_Kingdom2')" id="United_Kingdom2">United Kingdom</a></li>
         </ul>
       </div>
     </div>

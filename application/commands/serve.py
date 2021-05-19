@@ -2,7 +2,7 @@
 
 from flask import Flask, send_file, redirect, render_template
 from application.scripts.FormatData import FormatData
-from application.scripts.CovGraphs import CreateCountryBar, CreateRegionBar, CreateIRCountryBar, CreateIRRegionBar
+from application.scripts.CovGraphs import CompareIRCountryBar, CreateCountryBar, CreateRegionBar, CreateIRCountryBar, CreateIRRegionBar
 
 def serve(options):
     """Serve an API."""
@@ -34,16 +34,34 @@ def serve(options):
         return redirect("http://0.0.0.0:8080/") # Returns current window to main menu
 
     @app.route("/compare")
-    def reroute():
+    def rerout1():
+        """Reroutes to correct directory"""
+        return redirect("http://0.0.0.0:8080/compare/")
+
+    @app.route("/compare/")
+    def reroute2():
         """Reroutes to correct directory"""
         return send_file("../www/compare.html")
 
-    @app.route("/compare/<country1>")
+    @app.route("/compare/<country1>/")
     def compare1(country1):
-        """Adds selected country to ... but does not redirect"""
-        # directory = "../www/compare/" + country1
-        # return send_file(directory)
+        """Shows compare.html when adding a country"""
         return send_file("../www/compare.html")
+
+    @app.route("/compare/<country1>/<country2>")
+    def compare2(country1, country2):
+        """Shows graph of country1 and country2"""
+        country1 = checkString(country1)
+        country2 = checkString(country2)
+        CompareIRCountryBar(FormatData(), country1, country2)
+        return redirect("http://0.0.0.0:8080/compare/")
+
+    def checkString(country):
+        """Modifies string to fit standards for JHU"""
+        country = country[0:-1]
+        if country == "United_Kingdom": # Removes underscore
+            country = "United Kingdom"
+        return country
 
     app.run(host=options.address, port=options.port, debug=True)
 
