@@ -2,7 +2,7 @@
 
 from flask import Flask, send_file, redirect, render_template
 from application.scripts.FormatData import FormatData
-from application.scripts.CovGraphs import CompareIRCountryBar, CreateCountryBar, CreateRegionBar, CreateIRCountryBar, CreateIRRegionBar
+from application.scripts.CovGraphs import CompareCountryBar, CompareIRCountryBar, CreateCountryBar, CreateRegionBar, CreateIRCountryBar, CreateIRRegionBar
 
 def serve(options):
     """Serve an API."""
@@ -24,6 +24,7 @@ def serve(options):
     @app.route("/search/<search>")
     def graphSearch(search):
         """Shows graph of confirmed cases of searched country"""
+        CreateIRRegionBar(FormatData(), search)
         CreateRegionBar(FormatData(), "Confirmed", search)
         return redirect("http://0.0.0.0:8080/")
 
@@ -53,7 +54,8 @@ def serve(options):
         """Shows graph of country1 and country2"""
         country1 = checkString(country1)
         country2 = checkString(country2)
-        CompareIRCountryBar(FormatData(), country1, country2)
+        CompareCountryBar(FormatData(), country1, country2, 'Confirmed')
+        # CompareIRCountryBar(FormatData(), country1, country2)
         return redirect("http://0.0.0.0:8080/compare/")
 
     def checkString(country):
