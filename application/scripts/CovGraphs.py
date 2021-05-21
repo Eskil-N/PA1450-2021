@@ -50,7 +50,7 @@ def Comp_IR_DataPrepper(formatedData, country1, country2):
     return(CombinedDict)
 def CR_DataPrepper(formatedData, searchedCategory): # General Country_Region Dapa prepper. Takes in whole dataset and returns a dict that can be used with plotly.
     formatedData = formatedData.to_dict()
-    sortedDict = {'Country_Region': [], 'Data' : []}
+    sortedDict = {'Country_Region': [], searchedCategory : []}
     tempDict = {}
     for x in formatedData['Country_Region'].items():
         if x[1] in tempDict:
@@ -60,11 +60,11 @@ def CR_DataPrepper(formatedData, searchedCategory): # General Country_Region Dap
     tempDict = dict(sorted(tempDict.items(), key=lambda item: item[1])) 
     for key, val in tempDict.items():
         sortedDict['Country_Region'].append(key)
-        sortedDict['Data'].append(val)
+        sortedDict[searchedCategory].append(val)
     return sortedDict #Dict is structures like others produced from Dataformater with one category for province/state and another for the data but sorted.
 def PS_DataPrepper(formatedData, searchedCategory, searchedCountry): # General Province_State Data prepper. Takes in whole dataset, specified category, can country.
     formatedData = formatedData.to_dict()
-    sortedDict = {'Province_State' : [], 'Data' : []}
+    sortedDict = {'Province_State' : [], searchedCategory : []}
     tempDict = {}
     for x, y in zip(formatedData['Country_Region'].items(), formatedData['Province_State'].items()):
         if (x[1] == searchedCountry):
@@ -75,7 +75,7 @@ def PS_DataPrepper(formatedData, searchedCategory, searchedCountry): # General P
     tempDict = dict(sorted(tempDict.items(), key=lambda item: item[1])) 
     for key, val in tempDict.items():
         sortedDict['Province_State'].append(key)
-        sortedDict['Data'].append(val)
+        sortedDict[searchedCategory].append(val)
     return sortedDict #Dict is structures like others produced from Dataformater with one category for province/state and another for the data but sorted.
 def IR_PS_DataPrepper(formatedData, searchedCountry):
     formatedData = px.DataFrame(columns=['Country','Region','Infection Rate per 100k Population'])
@@ -133,36 +133,36 @@ def IR_C_DataPrepper(formatedData): #Incident_Rate Data prepper for Country_Regi
 def CreateCountryBar(formatedData, searchedCategory):# Creates and dissplays a bar chart with countries and specified categorys, will only work with cumulative data like deaths, confirmed
     myDict = CR_DataPrepper(formatedData, searchedCategory)
     #print(myDict)
-    fig = px.bar(myDict, x='Country_Region', y='Data')
-    fig.update_layout(title_text='Graph of ' + searchedCategory)
+    fig = px.bar(myDict, x='Country_Region', y=searchedCategory)
+    fig.update_layout(title_text='Graph of ' + searchedCategory + ' cases')
     fig.show()
 def CreateRegionBar(formatedData, searchedCategory, searchedCountry): #function creates a sorted bar chart of regions of a country, and specified data category.
     myDict = PS_DataPrepper(formatedData, searchedCategory, searchedCountry)
     #print(myDict)
-    fig = px.bar(myDict, x='Province_State', y='Data')
-    fig.update_layout(title_text='Graph of ' + searchedCategory + ' in ' + searchedCountry)
+    fig = px.bar(myDict, x='Province_State', y=searchedCategory)
+    fig.update_layout(title_text='Graph of ' + searchedCategory + ' cases in ' + searchedCountry)
     fig.show()
 def CreateIRCountryBar(formatedData): #function creates a sorted bar chart with countries and thier respective infection rate per 100k people.
     myDict = IR_C_DataPrepper(formatedData)
     #print(myDict)
     fig = px.bar(myDict, x='Country_Region', y='Infection Rate per 100k Population')
-    fig.update_layout(title_text='Graph of Infections per Capita')
+    fig.update_layout(title_text='Graph of Confirmed cases per Capita')
     fig.show()
 def CreateIRRegionBar(formatedData, searchedCountry): #function creates a sorted bar chart with Regions of selected country and thier respective infection rates per 100k people.
     myDict = IR_PS_DataPrepper(formatedData,searchedCountry)
     #print(myDict)
     fig = px.bar(myDict, x='Province_State', y='Infection Rate per 100k Population')
-    fig.update_layout(title_text='Graph of Infections per Capita in ' + searchedCountry)
-    fig.update_layout(title_text='Graph of Infections per Capita in ' + searchedCountry)
+    fig.update_layout(title_text='Graph of Confirmed cases per Capita in ' + searchedCountry)
+    fig.update_layout(title_text='Graph of Confirmed cases per Capita in ' + searchedCountry)
     fig.show()
 
 def CompareIRCountryBar(formatedData, country1, country2):
     Combined = Comp_IR_DataPrepper(formatedData, country1, country2)
-    fig = px.bar(Combined, x='Province_State', y='Infection Rate per 100k Population')
+    fig = px.bar(Combined, x='Province_State', y='Confirmed cases Rate per 100k Population')
     fig.show()
 
 def CompareCountryBar(formatedData, country1, country2, searchedCategory): #Exempel p[ hur man callar funktionen: CompareCountryBar(data,'Germany','Sweden','Confirmed')]
     Combined = Comp_DataPrepper(formatedData,country1,country2,searchedCategory)
     fig = go.Figure(data=[go.Bar( x=Combined['Province_State'], y=Combined[searchedCategory], marker_color=Combined['Color'])])
-    fig.update_layout(title_text='Graph of ' + searchedCategory + ' cases in ' + country1 + ' and '+ country2)
+    fig.update_layout(title_text='Graph of ' + searchedCategory + ' cases in ' + country1 + ' and '+ country2, yaxis_title=searchedCategory)
     fig.show()
