@@ -41,11 +41,7 @@ def Comp_IR_DataPrepper(formatedData, country1, country2):
         print(key , ' ' ,val , '\n')
         CombinedDict['Province_State'].append(key)
         CombinedDict['Infection Rate per 100k Population'].append(val)
-    
-    #for item in CombinedDict:
-    #    if math.isnan(item[1]):
-    #        CombinedDict.pop(item)
-    #dict(sorted(CombinedDict.items(), key=lambda item: item[1]))
+
     print(CombinedDict)
     return(CombinedDict)
 
@@ -150,28 +146,28 @@ def CreateCountryBar(formatedData, searchedCategory):# Creates and dissplays a b
     myDict = CR_DataPrepper(formatedData, searchedCategory)
     #print(myDict)
     fig = px.bar(myDict, x='Country_Region', y='Data')
-    fig.update_layout(title_text='Graph of ' + searchedCategory)
+    fig.update_layout(title_text='Graph of ' + searchedCategory, yaxis_title=searchedCategory)
     fig.show()
 
 def CreateRegionBar(formatedData, searchedCategory, searchedCountry): #function creates a sorted bar chart of regions of a country, and specified data category.
     myDict = PS_DataPrepper(formatedData, searchedCategory, searchedCountry)
     #print(myDict)
     fig = px.bar(myDict, x='Province_State', y='Data')
-    fig.update_layout(title_text='Graph of ' + searchedCategory + ' in ' + searchedCountry)
+    fig.update_layout(title_text='Graph of ' + searchedCategory + ' in ' + searchedCountry, yaxis_title=searchedCategory)
     fig.show()
 
 def CreateIRCountryBar(formatedData): #function creates a sorted bar chart with countries and thier respective infection rate per 100k people.
     myDict = IR_C_DataPrepper(formatedData)
     #print(myDict)
     fig = px.bar(myDict, x='Country_Region', y='Infection Rate per 100k Population')
-    fig.update_layout(title_text='Graph of Infections per Capita')
+    fig.update_layout(title_text='Graph of Infections per Capita', yaxis_title="Confirmed Cases per 100k Population")
     fig.show()
 
 def CreateIRRegionBar(formatedData, searchedCountry): #function creates a sorted bar chart with Regions of selected country and thier respective infection rates per 100k people.
     myDict = IR_PS_DataPrepper(formatedData,searchedCountry)
     #print(myDict)
     fig = px.bar(myDict, x='Province_State', y='Infection Rate per 100k Population')
-    fig.update_layout(title_text='Graph of Infections per Capita in' + searchedCountry)
+    fig.update_layout(title_text='Graph of Infections per Capita in ' + searchedCountry, yaxis_title="Confirmed Cases per 100k Population")
     fig.show()
 
 def CompareIRCountryBar(formatedData, country1, country2):
@@ -181,7 +177,7 @@ def CompareIRCountryBar(formatedData, country1, country2):
 
 def CompareCountryBar(formatedData, country1, country2, searchedCategory): #Exempel p[ hur man callar funktionen: CompareCountryBar(data,'Germany','Sweden','Confirmed')]
     Combined = Comp_DataPrepper(formatedData,country1,country2,searchedCategory)
-    fig = go.Figure(data=[go.Bar( x=Combined['Province_State'], y=Combined[searchedCategory], marker_color=Combined['Color'])])
-    fig.update_layout(title_text='Graph of ' + searchedCategory + ' in ' + country1 + ' and '+ country2)
+    fig = go.Figure(data=[go.Bar( x=Combined['Province_State'], y=Combined[searchedCategory], marker_color=Combined['Color'])]) #fungerande
+    #fig = px.bar(Combined, x='Province_State', y=searchedCategory, color='Country_Region') # inte testad
+    fig.update_layout(title_text='Graph of ' + searchedCategory + ' in ' + country1 + ' and '+ country2, yaxis_title=searchedCategory)
     fig.show()
-    
